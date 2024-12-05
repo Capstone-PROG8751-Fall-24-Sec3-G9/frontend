@@ -1,0 +1,127 @@
+/* src/components/Library.css */
+
+/* General Styles */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f5f5f5;
+  margin: 0;
+  padding: 0;
+}
+
+/* Container for the Library Page */
+.library-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.library-container h1 {
+  text-align: center;
+  font-size: 36px;
+  color: #333;
+  margin-bottom: 40px;
+}
+
+/* Grid Layout for Book Cards */
+.books-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  column-gap: 30px;
+  row-gap: 40px;
+}
+
+/* Individual Book Card */
+.book-card {
+  background-color: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Book Cover Image */
+.book-image {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out;
+}
+
+.book-image:hover {
+  transform: scale(1.05);
+}
+
+/* Book Information */
+.book-info {
+  padding: 15px;
+  text-align: center;
+}
+
+.book-title {
+  font-size: 20px;
+  color: #333;
+  margin: 10px 0 5px;
+}
+
+.book-author {
+  font-size: 16px;
+  color: #777;
+  margin-bottom: 15px;
+}
+
+/* Bookmark Note */
+.bookmark-note {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 15px;
+}
+
+/* Buttons */
+.view-details-button,
+.remove-bookmark-button {
+  display: inline-block;
+  margin: 5px;
+  padding: 10px 15px;
+  font-size: 14px;
+  font-weight: bold;
+  color: #fff;
+  background-color: #3498db; /* Default button color */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.view-details-button:hover,
+.remove-bookmark-button:hover {
+  background-color: #2980b9;
+}
+
+.remove-bookmark-button {
+  background-color: #e74c3c;
+}
+
+.remove-bookmark-button:hover {
+  background-color: #c0392b;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .book-image {
+    height: 250px;
+  }
+
+  .book-title {
+    font-size: 18px;
+  }
+
+  .book-author {
+    font-size: 14px;
+  }
+
+  .view-details-button,
+  .remove-bookmark-button {
+    font-size: 12px;
+    padding: 8px 12px;
+  }
+}

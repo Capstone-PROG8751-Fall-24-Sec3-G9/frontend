@@ -1,5 +1,4 @@
 import { Routes, Route } from "react-router-dom";
-
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -13,8 +12,8 @@ import Footer from "./components/Footer/Footer";
 import ForgotPassword from "./pages/ForgotPassword";
 import BookReader from "./pages/BookReader";
 import BookDetails from "./pages/BookDetails";
-
 import BookStorePage from "./components/BookStore/BookStore";
+import Library from "./pages/Library";
 
 const App = () => {
   return (
@@ -31,8 +30,8 @@ const App = () => {
         <Route path="/book/:bookId" element={<BookDetails />} />
         <Route path="/book-reader" element={<BookReader />} />
         <Route path="/book-reader/:bookId" element={<BookReader />} />
+        <Route path="/library" element={<Library />} />
       </Routes>
-      <div className="flex-1"></div>
       <ToastContainer
         position="bottom-right"
         autoClose={3000}

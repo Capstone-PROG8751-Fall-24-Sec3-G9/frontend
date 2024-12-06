@@ -1,5 +1,7 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+
+const baseUrl = import.meta.env.VITE_API_BASE_URL;
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -17,7 +19,7 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("/api/users/register", {
+      const response = await fetch(baseUrl + "/api/users/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -26,10 +28,10 @@ const Register = () => {
       });
 
       if (response.ok) {
-        navigate("/login");  // Redirect to login page after successful registration
+        navigate("/login"); // Redirect to login page after successful registration
       } else {
         const result = await response.json();
-        setError(result.message);  // Show error message
+        setError(result.message); // Show error message
       }
     } catch (err) {
       setError("Registration failed. Please try again.");
@@ -44,7 +46,9 @@ const Register = () => {
     >
       <div className="flex items-center justify-center min-h-screen bg-black bg-opacity-50">
         <div className="w-full max-w-sm sm:max-w-md md:max-w-lg p-6 sm:p-8 space-y-6 bg-white shadow-md rounded-lg">
-          <h2 className="text-2xl font-semibold text-center text-gray-800">Register</h2>
+          <h2 className="text-2xl font-semibold text-center text-gray-800">
+            Register
+          </h2>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
               <input
@@ -85,7 +89,9 @@ const Register = () => {
             >
               Register
             </button>
-            {error && <p className="text-sm text-red-500 text-center">{error}</p>}
+            {error && (
+              <p className="text-sm text-red-500 text-center">{error}</p>
+            )}
           </form>
         </div>
       </div>

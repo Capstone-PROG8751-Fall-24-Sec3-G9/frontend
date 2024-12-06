@@ -6,17 +6,17 @@ export default defineConfig({
   plugins: [react()],
   resolve: {
     alias: {
-      '@': '/src',
+      "@": "/src",
     },
   },
   server: {
     proxy: {
       // Proxy API calls to your backend server
-      '/api': {
-        target: 'http://localhost:4000', // Replace with your backend server URL
+      "/api": {
+        target: "https://capstone-backend-2qci.onrender.com", // Replace with your backend server URL
         changeOrigin: true,
         // rewrite: (path) => path.replace(/^\/api/, ''),
       },
     },
-  }
-})
+  },
+});

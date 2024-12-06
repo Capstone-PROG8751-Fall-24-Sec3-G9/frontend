@@ -2,6 +2,8 @@ import { toast } from "react-toastify";
 import { useState, useEffect } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 
+const baseUrl = import.meta.env.VITE_API_BASE_URL;
+
 const ForgotPassword = () => {
   const [searchParams] = useSearchParams();
   const [email, token] = [searchParams.get("email"), searchParams.get("token")];
@@ -38,7 +40,7 @@ const ForgotPassword = () => {
     // If token is present, no need to send email
     if (token) return;
     try {
-      const response = await fetch("/api/users/forgot-password", {
+      const response = await fetch(baseUrl + "/api/users/forgot-password", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -67,7 +69,7 @@ const ForgotPassword = () => {
     // Validate password
     if (!validateFormPassword()) return;
     try {
-      const response = await fetch("/api/users/reset-password", {
+      const response = await fetch(baseUrl + "/api/users/reset-password", {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

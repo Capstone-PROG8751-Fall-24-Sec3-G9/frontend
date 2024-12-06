@@ -2,34 +2,36 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { FaStar } from "react-icons/fa";
 import axios from "axios";
+import { toast } from "react-toastify";
 import { useAuth } from "../context/AuthContext";
 import "./BookDetails.css";
+
+const baseUrl = import.meta.env.VITE_API_BASE_URL;
 
 const BookDetails = () => {
   const { bookId } = useParams();
   const navigate = useNavigate();
+  const { user } = useAuth();
 
   const [book, setBook] = useState(null);
   const [reviews, setReviews] = useState([]);
   const [reviewText, setReviewText] = useState("");
   const [rating, setRating] = useState(0);
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [bookmarkId, setBookmarkId] = useState(null);
 
-  const { user } = useAuth();
-
+  // Fetch book details
   useEffect(() => {
     const fetchBookData = async () => {
       try {
-        const bookResponse = await axios.get(`/api/books/${bookId}`);
+        const bookResponse = await axios.get(`${baseUrl}/api/books/${bookId}`);
         setBook(bookResponse.data);
 
-        const reviewsResponse = await axios.get(`/api/reviews/${bookId}`);
+        const reviewsResponse = await axios.get(`${baseUrl}/api/books/${bookId}/reviews`);
         setReviews(reviewsResponse.data.reviews);
 
         if (user) {
-          const bookmarksResponse = await axios.get(`/api/bookmarks/user`, {
+          const bookmarksResponse = await axios.get(`${baseUrl}/api/bookmarks/user`, {
             withCredentials: true,
           });
           const bookmarks = bookmarksResponse.data;
@@ -43,58 +45,59 @@ const BookDetails = () => {
         console.error("Error fetching book data:", error);
       }
     };
+
     fetchBookData();
   }, [bookId, user]);
 
   const handleBookmark = async () => {
     if (!user) {
-      alert("You must log in to add bookmarks.");
+      toast.error("You must log in to add bookmarks.");
       navigate("/login");
       return;
     }
 
     try {
       if (isBookmarked) {
-        await axios.delete(`/api/bookmarks/${bookmarkId}`, {
+        await axios.delete(`${baseUrl}/api/bookmarks/${bookmarkId}`, {
           withCredentials: true,
         });
         setIsBookmarked(false);
         setBookmarkId(null);
-        alert("Bookmark removed successfully!");
+        toast.success("Bookmark removed successfully!");
       } else {
-        const response = await axios.post(`/api/bookmarks/${bookId}/add`, {}, { withCredentials: true });
+        const response = await axios.post(`${baseUrl}/api/bookmarks/${bookId}/add`, {}, { withCredentials: true });
         setIsBookmarked(true);
         setBookmarkId(response.data.bookmark._id);
-        alert("Bookmark added successfully!");
+        toast.success("Bookmark added successfully!");
       }
     } catch (error) {
       console.error("Error updating bookmark:", error);
+      toast.error("Failed to update bookmark.");
     }
   };
 
   const handleAddReview = async () => {
     if (!user) {
-      alert("You must log in to leave a review.");
+      toast.error("You must log in to leave a review.");
       navigate("/login");
       return;
     }
 
-    setIsSubmitting(true);
     try {
       await axios.post(
-        `/api/reviews/add`,
+        `${baseUrl}/api/reviews/add`,
         { rating, comment: reviewText, book_id: bookId },
         { withCredentials: true }
       );
-      const reviewsResponse = await axios.get(`/api/reviews/${bookId}`);
+      const reviewsResponse = await axios.get(`${baseUrl}/api/books/${bookId}/reviews`);
       setReviews(reviewsResponse.data.reviews);
       setReviewText("");
       setRating(0);
-      alert("Review added successfully!");
+      toast.success("Review added successfully!");
     } catch (error) {
       console.error("Error adding review:", error);
+      toast.error("Failed to add review.");
     }
-    setIsSubmitting(false);
   };
 
   if (!book) return <div>Loading...</div>;
@@ -109,7 +112,7 @@ const BookDetails = () => {
         <p className="book-description">{book.summary}</p>
         <div className="button-group">
           <button onClick={() => navigate(`/book-reader/${bookId}`)}>Read Now</button>
-          <button onClick={handleBookmark}>
+          <button className={`bookmark-button ${isBookmarked ? "bookmarked" : ""}`} onClick={handleBookmark}>
             {isBookmarked ? "Remove Bookmark" : "Add Bookmark"}
           </button>
         </div>
@@ -121,30 +124,24 @@ const BookDetails = () => {
           value={reviewText}
           onChange={(e) => setReviewText(e.target.value)}
         />
-        <div>
-          {[...Array(5)].map((_, i) => (
+        <div className="rating-stars">
+          {[...Array(5)].map((_, index) => (
             <FaStar
-              key={i}
-              color={i < rating ? "#FFD700" : "#E4E5E9"}
-              onClick={() => setRating(i + 1)}
+              key={index}
+              size={24}
+              color={index < rating ? "#FFD700" : "#E4E5E9"}
+              onClick={() => setRating(index + 1)}
             />
           ))}
         </div>
-        <button onClick={handleAddReview} disabled={isSubmitting || !reviewText || rating === 0}>
-          {isSubmitting ? "Submitting..." : "Submit Review"}
+        <button onClick={handleAddReview} disabled={!reviewText || rating === 0}>
+          Submit Review
         </button>
-        <div>
-          {reviews.map((review) => (
-            <div key={review._id}>
-              <div>
-                {[...Array(5)].map((_, i) => (
-                  <FaStar key={i} color={i < review.rating ? "#FFD700" : "#E4E5E9"} />
-                ))}
-              </div>
-              <p>{review.comment}</p>
-            </div>
-          ))}
-        </div>
+        {reviews.map((review) => (
+          <div key={review._id}>
+            <p>{review.comment}</p>
+          </div>
+        ))}
       </div>
     </div>
   );

@@ -26,7 +26,7 @@ const Navbar = () => {
           <Link className="flex" to="/">
             <img
               className="h-10 w-40 object-contain"
-              src="./logo.jpeg"
+              src="https://capstone-frontend-i62w.onrender.com/logo.jpeg"
               alt="logo"
             />
           </Link>

@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import "./BookStore.css";
+
+const baseUrl = import.meta.env.VITE_API_BASE_URL;
 
 const BookStorePage = () => {
   const [books, setBooks] = useState([]);
@@ -28,7 +30,7 @@ const BookStorePage = () => {
     if (filter && filter !== "all") params.genre = filter;
 
     axios
-      .get("/api/books", { params })
+      .get(baseUrl + "/api/books", { params })
       .then((response) => {
         setBooks(response.data.books);
         setTotalBooks(response.data.totalBooks);
@@ -58,7 +60,7 @@ const BookStorePage = () => {
       <h1 className="text-2xl md:text-4xl lg:text-6xl font-semibold text-black-100">
         Browse our catalogue!
       </h1>
-           <div className="search-container">
+      <div className="search-container">
         <input
           type="text"
           placeholder="Search for a book!"
@@ -122,9 +124,7 @@ const BookStorePage = () => {
                 {new Date(book.publish_date).toDateString()}
               </p>
               <p>{book.summary || "No summary available."}</p>
-              <Link
-                to={`/book/${book._id}`}
-              >
+              <Link to={`/book/${book._id}`}>
                 <button className="read-button">Read Now</button>
               </Link>
             </div>

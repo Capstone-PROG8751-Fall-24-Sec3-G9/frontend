@@ -1,5 +1,7 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import BookCard from "../BookCard/BookCard";
+
+const baseUrl = import.meta.env.VITE_API_BASE_URL;
 
 const RecentlyAdded = () => {
   const [latestBooks, setLatestBooks] = useState([]);
@@ -8,7 +10,7 @@ const RecentlyAdded = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("/api/page/home"); // Adjusted endpoint
+        const response = await fetch(baseUrl + "/api/page/home"); // Adjusted endpoint
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }

@@ -4,6 +4,8 @@ import { useParams } from "react-router-dom";
 import Epub from "epubjs"; // Import EPUB.js
 import "../App.css";
 
+const baseUrl = import.meta.env.VITE_API_BASE_URL;
+
 const BookReader = () => {
   const { bookId } = useParams(); // Retrieve bookId from route params
   const [book, setBook] = useState(null); // State for book data
@@ -13,7 +15,7 @@ const BookReader = () => {
   useEffect(() => {
     const fetchBook = async () => {
       try {
-        const response = await axios.get(`/api/books/${bookId}`);
+        const response = await axios.get(`${baseUrl}/api/books/${bookId}`);
         setBook(response.data);
       } catch (error) {
         console.error("Error fetching book data:", error);

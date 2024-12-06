@@ -2,8 +2,9 @@ import { useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
-const Login = () => {
+const baseUrl = import.meta.env.VITE_API_BASE_URL;
 
+const Login = () => {
   const [searchParams] = useSearchParams();
 
   const [formData, setFormData] = useState({
@@ -22,7 +23,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("/api/users/login", {
+      const response = await fetch(baseUrl + "/api/users/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -32,11 +33,11 @@ const Login = () => {
 
       if (response.ok) {
         const result = await response.json();
-        login(result.user);  // Store user data in context
-        navigate("/");  // Redirect to home page
+        login(result.user); // Store user data in context
+        navigate("/"); // Redirect to home page
       } else {
         const result = await response.json();
-        setError(result.message);  // Show error message
+        setError(result.message); // Show error message
       }
     } catch (err) {
       setError("Login failed. Please try again.");
@@ -51,7 +52,9 @@ const Login = () => {
     >
       <div className="flex items-center justify-center min-h-screen bg-black bg-opacity-50">
         <div className="w-full max-w-sm sm:max-w-md md:max-w-lg p-6 sm:p-8 space-y-6 bg-white shadow-md rounded-lg">
-          <h2 className="text-2xl font-semibold text-center text-gray-800">Login</h2>
+          <h2 className="text-2xl font-semibold text-center text-gray-800">
+            Login
+          </h2>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
               <input
@@ -81,7 +84,9 @@ const Login = () => {
             >
               Login
             </button>
-            {error && <p className="text-sm text-red-500 text-center">{error}</p>}
+            {error && (
+              <p className="text-sm text-red-500 text-center">{error}</p>
+            )}
             <div className="text-center mt-4">
               <button
                 type="button"

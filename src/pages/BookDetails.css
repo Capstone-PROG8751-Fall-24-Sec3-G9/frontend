@@ -3,7 +3,7 @@
   flex-direction: row;
   max-width: 1000px;
   margin: 2rem auto;
-  background-color: #000000;
+  background-color: #000000; /* Dark background for contrast */
   border-radius: 16px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
   overflow: hidden;
@@ -26,20 +26,20 @@
 .book-info {
   flex: 2;
   padding: 2rem;
-  color: #ffffff; /* Updated for contrast */
+  color: #ffffff; /* Updated for better contrast */
 }
 
 .book-title {
   font-size: 2.5rem;
   font-weight: 700;
-  color: #ffffff; /* Improved contrast */
+  color: #ffffff; /* White text for improved contrast */
   margin-bottom: 1rem;
   line-height: 1.2;
 }
 
 .book-description {
   font-size: 1rem;
-  color: #e0e0e0; /* Improved readability */
+  color: #e0e0e0; /* Light gray for readability */
   line-height: 1.6;
   margin-bottom: 1.5rem;
 }
@@ -47,7 +47,7 @@
 .book-author,
 .book-publisher {
   font-size: 1rem;
-  color: #cccccc; /* Improved readability */
+  color: #cccccc; /* Light gray for better readability */
   margin-bottom: 0.5rem;
   display: flex;
   align-items: center;
@@ -63,23 +63,22 @@
 .read-now-button {
   width: 100%;
   padding: 1rem;
-  background-color: #00509e; /* Darker blue for better contrast */
-  color: #ffffff; /* White text for readability */
+  background-color: #00509e; /* Dark blue */
+  color: #ffffff; /* White text */
   border: none;
   border-radius: 8px;
   font-size: 1.1rem;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(0, 80, 158, 0.3); /* Adjusted shadow for the new color */
+  box-shadow: 0 4px 15px rgba(0, 80, 158, 0.3); /* Subtle shadow */
 }
 
 .read-now-button:hover {
-  background-color: #003e7e; /* Even darker blue for hover state */
+  background-color: #003e7e; /* Darker blue on hover */
   transform: translateY(-3px);
   box-shadow: 0 6px 20px rgba(0, 80, 158, 0.4);
 }
-
 
 .button-group {
   display: flex;
@@ -107,12 +106,12 @@
 }
 
 .bookmark-button.bookmarked {
-  background-color: #28a745; /* Bright green */
+  background-color: #28a745; /* Green for bookmarked state */
   color: #ffffff; /* White text for contrast */
 }
 
 .reviews-container {
-  background-color: #f9f9fc;
+  background-color: #f9f9fc; /* Light background for reviews */
   padding: 1.5rem;
   border-radius: 8px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
@@ -122,8 +121,7 @@
   font-size: 1.8rem;
   font-weight: bold;
   margin-bottom: 1rem;
-  color: #333333; /* Dark gray for contrast */
-  background-color: transparent; /* Removed background for readability */
+  color: #333333; /* Dark gray for headings */
 }
 
 .add-review {
